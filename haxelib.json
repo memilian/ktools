@@ -1,0 +1,13 @@
+{
+  "name": "ktools",
+  "url" : "https://github.com/memilian/ktools/",
+  "license": "MIT",
+  "tags": ["Kha", "tools", "extension"],
+  "description": "collection of tools to make development with Kha easier",
+  "version": "0.0.1",
+  "classPath": "Sources",
+  "releasenote": "",
+  "contributors": ["Mathieu Emilian"],
+  "dependencies": {
+  }
+}
