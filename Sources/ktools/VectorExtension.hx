@@ -7,6 +7,8 @@ import kha.math.FastVector3;
 import kha.math.FastVector4;
 import kha.math.FastMatrix4;
 
+using ktools.FloatExtension.FastFloatExtension;
+
 class VectorExtension{
 
 	public static function rotateX(v : FastVector3, angle : Float){
@@ -33,6 +35,8 @@ class VectorExtension{
 	} 
 
 	public static inline function angleTo(a : FastVector3, b : FastVector3){
+		// a.normalize();
+		// b.normalize();
 		return Math.acos(a.dot(b) / (a.length*b.length));
 	}
 
@@ -57,5 +61,13 @@ class VectorExtension{
 
 	public static inline function transform(vector : FastVector3, mat : FastMatrix4){
 		return toFast3(mat.multvec(toFast4(vector)));
+	}
+
+	public static inline function lengthSquared(vector : FastVector3){
+		return vector.x * vector.x + vector.y * vector.y + vector.z * vector.z;
+	}
+
+	public static inline function precision(vector : FastVector3, val : Int){
+		return new FastVector3(vector.x.precision(val), vector.y.precision(val), vector.z.precision(val));
 	}
 }
