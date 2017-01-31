@@ -11,22 +11,45 @@ using ktools.FloatExtension.FastFloatExtension;
 
 class VectorExtension{
 
+	public static inline function axisX(c : Class<FastVector3>){
+		return new FastVector3(1,0,0);
+	}
+
+	public static inline function axisNX(c : Class<FastVector3>){
+		return new FastVector3(-1,0,0);
+	}
+
+	public static inline function axisY(c : Class<FastVector3>){
+		return new FastVector3(0,1,0);
+	}
+
+	public static inline function axisNY(c : Class<FastVector3>){
+		return new FastVector3(0,-1,0);
+	}
+
+	public static inline function axisZ(c : Class<FastVector3>){
+		return new FastVector3(0,0,1);
+	}
+
+	public static inline function axisNZ(c : Class<FastVector3>){
+		return new FastVector3(0,0,-1);
+	}
+
 	public static function rotateX(v : FastVector3, angle : Float){
-		var v4 = new FastVector4(v.x,v.y,v.z);
+		var v4 = toFast4(v);
 		var mat = FastMatrix4.rotationX(angle);
 		v4 = mat.multvec(v4);
 		return new FastVector3(v4.x, v4.y, v4.z);
 	}
 
 	public static function rotateY(v : FastVector3, angle : Float){
-		var v4 = new FastVector4(v.x,v.y,v.z);
+		var v4 = toFast4(v);
 		var mat = FastMatrix4.rotationY(angle);
 		v4 = mat.multvec(v4);
 		return new FastVector3(v4.x, v4.y, v4.z);
 	}
 
 	public static function rotateZ(v : FastVector3, angle : Float){
-		//trace(toFast3(FastMatrix4.rotationZ(angle).multvec(toFast4(v, 1.0))));
 		return toFast3(FastMatrix4.rotationZ(angle).multvec(toFast4(v, 1.0)));
 	}
 
