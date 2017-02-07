@@ -35,6 +35,12 @@ class VectorExtension{
 		return new FastVector3(0,0,-1);
 	}
 
+	public static inline function copyFrom(v : FastVector3, from : FastVector3){
+		v.x = from.x;
+		v.y = from.y;
+		v.z = from.z;
+	}
+
 	public static function rotateX(v : FastVector3, angle : Float){
 		var v4 = toFast4(v);
 		var mat = FastMatrix4.rotationX(angle);
