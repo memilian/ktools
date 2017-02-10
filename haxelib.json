@@ -9,5 +9,6 @@
   "releasenote": "",
   "contributors": ["Mathieu Emilian"],
   "dependencies": {
+    "kha":""
   }
 }
