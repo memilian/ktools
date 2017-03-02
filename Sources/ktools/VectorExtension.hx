@@ -64,9 +64,7 @@ class VectorExtension{
 	} 
 
 	public static inline function angleTo(a : FastVector3, b : FastVector3){
-		// a.normalize();
-		// b.normalize();
-		return Math.acos(a.dot(b) / (a.length*b.length));
+		return Math.atan2(a.y, a.x) - Math.atan2(b.y, b.x); //Math.acos(a.dot(b) / (a.length*b.length));
 	}
 
 	public static inline function copy(a : FastVector3){
@@ -86,6 +84,10 @@ class VectorExtension{
 
 	public static inline function toFast3(vector : FastVector4){
 		return new FastVector3(vector.x, vector.y, vector.z);
+	}
+
+	public static inline function toVector3(vector : FastVector3){
+		return new Vector3(vector.x, vector.y, vector.z);
 	}
 
 	public static inline function transform(vector : FastVector3, mat : FastMatrix4){
