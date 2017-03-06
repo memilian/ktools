@@ -67,6 +67,36 @@ class VectorExtension{
 		return Math.atan2(a.y, a.x) - Math.atan2(b.y, b.x); //Math.acos(a.dot(b) / (a.length*b.length));
 	}
 
+	public static inline function rotationTo(a : FastVector3, b : FastVector3) : Quaternion{
+
+		var a = copy(a);
+		var b = copy(b);
+		a.normalize();
+		b.normalize();
+
+		var cosTheta = a.dot(b);
+		var rotAxis = new FastVector3();
+
+		if(cosTheta < -1 + 0.001){
+			// special case when vectors in opposite directions :
+			// there is no "ideal" rotation axis
+			// So guess one. any will do as long as it's perpendicular to start
+			rotAxis = new FastVector3(0,0,1).cross(a);
+			if(lengthSquared(rotAxis) < 0.01) { //parallel
+				rotAxis = new FastVector3(1, 0, 0).cross(a);
+			}
+			rotAxis.normalize();
+			return Quaternion.fromAxisAngle(toVector3(rotAxis), Math.PI);
+		}
+
+		rotAxis = a.cross(b);
+
+		var s = Math.sqrt((1 + cosTheta) * 2);
+		var invS = 1 / s;
+
+		return new Quaternion(rotAxis.x * invS, rotAxis.y * invS, rotAxis.z * invS, s * 0.5);
+	}
+
 	public static inline function copy(a : FastVector3){
 		return a.mult(1);
 	}
@@ -90,6 +120,11 @@ class VectorExtension{
 		return new Vector3(vector.x, vector.y, vector.z);
 	}
 
+	public static inline function toVector4(vector : FastVector3, w = 1.0){
+		return new Vector4(vector.x, vector.y, vector.z, w);
+	}
+	
+
 	public static inline function transform(vector : FastVector3, mat : FastMatrix4){
 		return toFast3(mat.multvec(toFast4(vector)));
 	}
@@ -100,5 +135,20 @@ class VectorExtension{
 
 	public static inline function precision(vector : FastVector3, val : Int){
 		return new FastVector3(vector.x.precision(val), vector.y.precision(val), vector.z.precision(val));
+	}
+
+	public static inline function lerp(start : FastVector3, end : FastVector3, ratio : Float){
+		return start.add(end.sub(start).mult(ratio));
+	}
+}
+
+class Vector4Extension{
+
+	public static inline function toFast3(vector : Vector4){
+		return new FastVector3(vector.x, vector.y, vector.z);
+	}
+
+	public static inline function toVector3(vector : Vector4){
+		return new Vector3(vector.x, vector.y, vector.z);
 	}
 }
