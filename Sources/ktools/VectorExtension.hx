@@ -3,13 +3,21 @@ package ktools;
 import kha.math.Vector3;
 import kha.math.Vector4;
 import kha.math.Quaternion;
+import kha.math.FastVector2;
 import kha.math.FastVector3;
 import kha.math.FastVector4;
 import kha.math.FastMatrix4;
 
 using ktools.FloatExtension.FastFloatExtension;
 
-class VectorExtension{
+class FastVector2Extension{
+	public static inline function toFast3(vector : FastVector2, z=0.0){
+		return new FastVector3(vector.x, vector.y, z);
+	}
+
+}
+
+class FastVector3Extension{
 
 	public static inline function axisX(c : Class<FastVector3>){
 		return new FastVector3(1,0,0);
@@ -116,6 +124,11 @@ class VectorExtension{
 		return new FastVector3(vector.x, vector.y, vector.z);
 	}
 
+	public static inline function toFast2(vector : FastVector3){
+		return new FastVector2(vector.x, vector.y);
+	}
+
+
 	public static inline function toVector3(vector : FastVector3){
 		return new Vector3(vector.x, vector.y, vector.z);
 	}
@@ -123,7 +136,11 @@ class VectorExtension{
 	public static inline function toVector4(vector : FastVector3, w = 1.0){
 		return new Vector4(vector.x, vector.y, vector.z, w);
 	}
-	
+
+	public static inline function transformHomogeneous(vector : FastVector3, mat : FastMatrix4){
+		var projected = mat.multvec(toFast4(vector));
+		return toFast3(projected).mult(1/projected.w);
+	}
 
 	public static inline function transform(vector : FastVector3, mat : FastMatrix4){
 		return toFast3(mat.multvec(toFast4(vector)));
