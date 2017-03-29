@@ -41,4 +41,9 @@ class ArrayExtension{
 		}
 		return true;
 	}
+
+	public static inline function lastElement<T>(arr : Array<T>) : T {
+		if(arr.length == 0) return null;
+		return arr[arr.length-1];
+	}
 }
